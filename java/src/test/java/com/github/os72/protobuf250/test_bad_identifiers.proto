@@ -28,13 +28,81 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Author: liujisi@google.com (Pherl Liu)
+// Author: jonp@google.com (Jon Perlow)
+
+// This file tests that various identifiers work as field and type names even
+// though the same identifiers are used internally by the java code generator.
 
 
-package protobuf_unittest_import;
+// Some generic_services option(s) added automatically.
+// See:  http://go/proto2-generic-services-default
+option java_generic_services = true;   // auto-added
 
-option java_package = "com.github.os72.protobuf250.test";
+package io_protocol_tests;
 
-message PublicImportMessage {
-  optional int32 e = 1;
+option java_package = "com.github.os72.protobuf250";
+option java_outer_classname = "TestBadIdentifiersProto";
+
+message TestMessage {
 }
+
+message Descriptor {
+  option no_standard_descriptor_accessor = true;
+  optional string descriptor = 1;
+  message NestedDescriptor {
+    option no_standard_descriptor_accessor = true;
+    optional string descriptor = 1;
+  }
+  optional NestedDescriptor nested_descriptor = 2;
+}
+
+message Parser {
+  enum ParserEnum {
+    PARSER = 1;
+  }
+  optional ParserEnum parser = 1;
+}
+
+message Deprecated {
+  enum TestEnum {
+    FOO = 1;
+  }
+
+  optional int32 field1 = 1 [deprecated=true];
+  optional TestEnum field2 = 2 [deprecated=true];
+  optional TestMessage field3 = 3 [deprecated=true];
+}
+
+message Override {
+  optional int32 override = 1;
+}
+
+message Object {
+  optional int32 object = 1;
+  optional string string_object = 2;
+}
+
+message String {
+  optional string string = 1;
+}
+
+message Integer {
+  optional int32 integer = 1;
+}
+
+message Long {
+  optional int32 long = 1;
+}
+
+message Float {
+  optional float float = 1;
+}
+
+message Double {
+  optional double double = 1;
+}
+
+service TestConflictingMethodNames {
+  rpc Override(TestMessage) returns (TestMessage);
+}
+

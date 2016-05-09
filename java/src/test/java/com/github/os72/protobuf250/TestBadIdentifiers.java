@@ -28,13 +28,36 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Author: liujisi@google.com (Pherl Liu)
+package com.github.os72.protobuf250;
 
+import junit.framework.TestCase;
 
-package protobuf_unittest_import;
+/**
+ * Tests that proto2 api generation doesn't cause compile errors when
+ * compiling protocol buffers that have names that would otherwise conflict
+ * if not fully qualified (like @Deprecated and @Override).
+ *
+ * @author jonp@google.com (Jon Perlow)
+ */
+public class TestBadIdentifiers extends TestCase {
 
-option java_package = "com.github.os72.protobuf250.test";
+  public void testCompilation() {
+    // If this compiles, it means the generation was correct.
+    TestBadIdentifiersProto.Deprecated.newBuilder();
+    TestBadIdentifiersProto.Override.newBuilder();
+  }
 
-message PublicImportMessage {
-  optional int32 e = 1;
+  public void testGetDescriptor() {
+    Descriptors.FileDescriptor fileDescriptor =
+        TestBadIdentifiersProto.getDescriptor();
+    String descriptorField = TestBadIdentifiersProto.Descriptor
+        .getDefaultInstance().getDescriptor();
+    Descriptors.Descriptor protoDescriptor = TestBadIdentifiersProto.Descriptor
+        .getDefaultInstance().getDescriptorForType();
+    String nestedDescriptorField = TestBadIdentifiersProto.Descriptor
+        .NestedDescriptor.getDefaultInstance().getDescriptor();
+    Descriptors.Descriptor nestedProtoDescriptor = TestBadIdentifiersProto
+        .Descriptor.NestedDescriptor.getDefaultInstance()
+        .getDescriptorForType();
+  }
 }

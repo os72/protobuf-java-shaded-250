@@ -28,13 +28,25 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Author: liujisi@google.com (Pherl Liu)
+package com.github.os72.protobuf250;
 
+/**
+ * Thrown by blocking RPC methods when a failure occurs.
+ *
+ * @author cpovirk@google.com (Chris Povirk)
+ */
+public class ServiceException extends Exception {
+  private static final long serialVersionUID = -1219262335729891920L;
 
-package protobuf_unittest_import;
+  public ServiceException(final String message) {
+    super(message);
+  }
 
-option java_package = "com.github.os72.protobuf250.test";
+  public ServiceException(final Throwable cause) {
+    super(cause);
+  }
 
-message PublicImportMessage {
-  optional int32 e = 1;
+  public ServiceException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 }
