@@ -5,7 +5,7 @@ Protocol Buffer Java API - shaded version 2.5.0.
 Available on Maven Central
 
 [![Maven Central](https://img.shields.io/badge/maven%20central-0.9-brightgreen.svg)](http://search.maven.org/#artifactdetails|com.github.os72|protobuf-java-shaded-250|0.9|)
-* http://central.maven.org/maven2/com/github/os72/protobuf-java-shaded-250/0.9
+* http://central.maven.org/maven2/com/github/os72/protobuf-java-shaded-250/0.9/
 
 ---
 
